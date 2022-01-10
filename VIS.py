@@ -14,8 +14,7 @@ daystring = today.strftime("%Y%m%d")
 day = today.strftime("%d")
 month = today.strftime("%m")
 year = today.year
-# https://borsaistanbul.com/data/thb/2021/08/thb202108091.zip
-# https://borsaistanbul.com/data/vadeli/viop_20210809.csv
+
 spot_url = f"https://borsaistanbul.com/data/thb/{year}/{month}/thb{daystring}1.zip"
 fut_url = f"https://borsaistanbul.com/data/vadeli/viop_{daystring}.csv"
 
@@ -29,17 +28,10 @@ with requests.Session() as s:
 
 def unzip(zipped):
     with ZipFile(BytesIO(zipped), 'r') as myzip:
-        # Get a list of all archived file names from the zip
         listOfFileNames = myzip.namelist()
-        # Iterate over the file names
         for fileName in listOfFileNames:
-            # Check filename endswith csv
             if fileName.endswith('.csv'):
                 return myzip.open(fileName)
-                # x = myzip.open(fileName)
-                # Extract a single file from zip
-                # myzip.extract(fileName,"zip_folder")
-
 
 df_spot_raw = pd.read_csv(unzip(spot_file), sep=";", skiprows=1)
 
