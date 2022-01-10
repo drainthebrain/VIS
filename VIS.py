@@ -9,6 +9,8 @@ import math
 pd.options.display.max_columns = 9999
 pd.options.display.max_rows = 9999
 
+rf = 0.19  # Set a valid risk-free rate for theoretical px calc.
+
 today = dt.datetime.today()  # + dt.timedelta(-1)
 daystring = today.strftime("%Y%m%d")
 day = today.strftime("%d")
@@ -46,7 +48,6 @@ df_fut1 = pd.read_csv(fut_url, sep=";", skiprows=1)[["TRADE DATE", "INSTRUMENT S
 exp_dates = df_fut1.iloc[:, -1].unique()
 exp_dates.sort()
 ttm = []
-rf = 0.19
 
 t = 0
 for i in exp_dates:
